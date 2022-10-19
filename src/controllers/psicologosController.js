@@ -12,9 +12,13 @@ const psicologosController = {
     },
     // Lista todos os Psicólogos por id
     async listarPsicologosId(req, res) {
-        const { id } = req.params
+        const { id } = req.params;
 
         const newPiscologos = await Psicologos.findByPk(id);
+
+        if(!id) {
+            return res.status(404).json("Id não encontrado")
+        }
         res.status(200).json(newPiscologos);
     },
 
@@ -63,8 +67,8 @@ const psicologosController = {
                 id,
             },
         });
+        return res.status(204);
 
-        res.status(204)
     }
 
 };

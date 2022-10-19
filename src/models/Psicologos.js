@@ -11,10 +11,12 @@ const Psicologos = db.define('Psicologos', {
         type: DataTypes.STRING,
     },
     email: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+       
     },
     senha: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+       
     },
     apresentacao: {
         type: DataTypes.STRING
