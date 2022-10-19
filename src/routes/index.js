@@ -4,6 +4,7 @@ const routes = express.Router();
 // importando dados do controller
 const pacientesController = require('../controllers/pacientesController');
 const psicologosController = require('../controllers/psicologosController');
+const atendimentosController = require('../controllers/atendimentosController');
 
 
 
@@ -31,6 +32,9 @@ routes.post('/pacientes', pacientesController.cadastrarPacientes);
 routes.put('/pacientes/:id', pacientesController.atualizarPacientes);
 routes.delete('/pacientes/:id', pacientesController.deletarPacienets);
 
-
+// Aqui começa o CRUD dos atendimentos
+routes.get('/atendimentos', atendimentosController.listarAtendimentos);
+routes.get('/atendimentos/:id', atendimentosController.listarAtendimentoId);
+routes.post('/atendimentos', atendimentosController.cadastrarAtendimentos);
 
 module.exports = routes;
