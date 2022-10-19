@@ -16,13 +16,11 @@ const Atendimentos = db.define('Atendimentos', {
     },
     psicologos_id:{
         type: DataTypes.INTEGER,
-        foreingKey: true,
-        autoIncrement: true,
+        foreingKey: true
     },
     pacientes_id:{
         type: DataTypes.INTEGER,
         foreingKey: true,
-        autoIncrement: true,
     },
 
 },
