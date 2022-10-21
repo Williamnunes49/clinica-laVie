@@ -5,69 +5,116 @@ const psicologosController = {
 
     // Lista todos os Psicologos
     // tentar esconder a senha depois
-    async listarPsicologos(req, res) {
-        const { senha } = req.body
-        const newPiscologos = await Psicologos.findAll();
-        res.status(200).json(newPiscologos);
+    async listarPsicologos(req, res, next) {
+        try {
+            const { senha } = req.body
+
+            const newPiscologos = await Psicologos.findAll();
+            res.status(200).json(newPiscologos);
+
+        }
+        catch (error) {
+            next(error);
+        }
     },
     // Lista todos os Psicólogos por id
-    async listarPsicologosId(req, res) {
-        const { id } = req.params;
+    async listarPsicologosId(req, res, next) {
+        try {
+            const { id } = req.params;
 
-        const newPiscologos = await Psicologos.findByPk(id);
+            const newPiscologos = await Psicologos.findByPk(id);
 
-        if(!id) {
-            return res.status(404).json("Id não encontrado")
+            if (!newPiscologos) {
+                return res.status(404).json("Id não encontrado")
+            }
+            res.status(200).json(newPiscologos);
         }
-        res.status(200).json(newPiscologos);
+        catch (error) {
+            next(error);
+        }
     },
 
     // Cria uma novo Psicólogo
-    async cadastraPsicologos(req, res) {
-        const { nome, email, senha, apresentacao } = req.body;
+    async cadastraPsicologos(req, res, next) {
+        try {
+            const { nome, email, senha, apresentacao } = req.body;
 
-        const newSenha = bcrypt.hashSync(senha, 10);
+            const newSenha = bcrypt.hashSync(senha, 10);
 
-        const newPiscologos = await Psicologos.create({
-            nome,
-            email,
-            senha: newSenha,
-            apresentacao,
-        });
-        return res.status(201).json(newPiscologos);
+            const newPiscologos = await Psicologos.create({
+                nome,
+                email,
+                senha: newSenha,
+                apresentacao,
+            });
+            return res.status(201).json(newPiscologos);
+        }
+        catch (error) {
+            next(error);
+        }
     },
 
     // Atualizar Psicólogos
-    // OBS: retornar os dados atualizados na tela depois, só ta retornando o id
-    async atualizarPsicologos(req, res) {
-        const { id } = req.params
-        const { nome, email, senha, apresentacao } = req.body;
+    async atualizarPsicologos(req, res, next) {
+        try {
+            const { id } = req.params
+            const { nome, email, senha, apresentacao } = req.body;
+            const newSenha = bcrypt.hashSync(senha, 10)
 
-        const psicologoAtualizado = await Psicologos.update({
-            nome,
-            email,
-            senha,
-            apresentacao,
-        },
-            {
-                where: {
-                    id,
+
+
+            const psicologoAtualizado = await Psicologos.update({
+                nome,
+                email,
+                senha: newSenha,
+                apresentacao,
+            },
+                {
+                    where: {
+                        id,
+                    }
                 }
+            );
+            const psicologo = await Psicologos.findOne({
+                where: {
+                    id
+                }
+            })
+            if (!psicologo) {
+                return res.status(404).json("Id não encontrado");
             }
-        );
-        res.status(200).json(psicologoAtualizado)
+
+            return res.status(200).json(psicologo);
+        }
+        catch (error) {
+            next(error);
+        }
     },
 
     // Deleta um Psicólogo pelo id
-    async deletarPsicologos(req, res) {
-        const { id } = req.params;
+    async deletarPsicologos(req, res, next) {
+        try {
+            const { id } = req.params;
 
-        await Psicologos.destroy({
-            where: {
-                id,
-            },
-        });
-        return res.status(204);
+            const psicologo = await Psicologos.findOne({
+                where: {
+                    id,
+                }
+            })
+
+            await Psicologos.destroy({
+                where: {
+                    id,
+                },
+            });
+            if (!psicologo) {
+                res.status(404).json("Id não encontrado");
+            }
+            return res.sendStatus(204)
+        }
+        catch (error) {
+            next(error);
+        }
 
     }
 

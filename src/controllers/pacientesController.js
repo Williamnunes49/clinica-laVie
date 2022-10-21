@@ -1,4 +1,4 @@
-const { Pacientes } = require('../models')
+const { Pacientes, Psicologos } = require('../models')
 
 const pacientesController = {
     // lista todos os Pacientes
@@ -48,24 +48,26 @@ const pacientesController = {
                 }
             },
         );
-        return res.status(200).json(newPacientes)
+        const pacienteAtualizado = await Pacientes.findOne({
+            where: {
+                id,
+            }
+        })
+        return res.status(200).json(pacienteAtualizado)
     },
 
     // Exclui Pacientes pelo id  
     async deletarPacienets(req, res) {
-        
-            const { id } = req.params;
-            await Pacientes.destroy({
-                where: {
-                    id,
-                },
-            });
-            /*if(!id) {
-                res.status(404).json("id não enconrado")
-            };*/
-            res.status(204);
 
-        
+        const { id } = req.params;
+        await Pacientes.destroy({
+            where: {
+                id,
+            },
+        });
+        res.sendStatus(204);
+
+
     }
 };
 

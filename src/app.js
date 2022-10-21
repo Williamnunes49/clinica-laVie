@@ -9,7 +9,7 @@ db.hasConection();
 app.use(express.json());
 
 app.use(routes);
-app.use(router)
+app.use(router);
 app.use(error);
 
 app.listen(3000, ()=> {

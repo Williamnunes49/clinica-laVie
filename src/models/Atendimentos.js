@@ -1,34 +1,41 @@
 const db = require("../database");
 const { DataTypes } = require("sequelize");
+const { Psicologos, Pacientes } = require('../models')
 
-const Atendimentos = db.define('Atendimentos', {
+const Atendimentos = db.define(
+  "Atendimentos",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+
+    psicologos_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Psicologos,
+        key: "id",
+      },
+    },
+    pacientes_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Pacientes,
+        key: "id",
+      },
     },
     data_atendimento: {
-        type: DataTypes.DATE,
-        
+      type: DataTypes.DATE,
     },
-    observações: {  
-        type: DataTypes.STRING,
+    observacoes: {
+      type: DataTypes.STRING,
     },
-    psicologos_id:{
-        type: DataTypes.INTEGER,
-        foreingKey: true
-    },
-    pacientes_id:{
-        type: DataTypes.INTEGER,
-        foreingKey: true,
-    },
-
-},
-    {
-        tableName: "atendimentos",
-        timestamps: false,
-    }
-
+  },
+  {
+    tableName: "atendimentos",
+    timestamps: false,
+  }
 );
 
 module.exports = Atendimentos;
