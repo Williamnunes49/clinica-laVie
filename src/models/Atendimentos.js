@@ -28,16 +28,6 @@ const Atendimentos = db.define(
     data_atendimento: {
       type: DataTypes.DATE,
     },
-<<<<<<< HEAD
-    observacoes: {
-      type: DataTypes.STRING,
-    },
-  },
-  {
-    tableName: "atendimentos",
-    timestamps: false,
-  }
-=======
     observacoes: {  
         type: DataTypes.STRING,
     },
@@ -62,7 +52,6 @@ const Atendimentos = db.define(
         timestamps: false,
     }
 
->>>>>>> 0a070eefc189b9ec0376ae96d5699f08b8f57afb
 );
 
 module.exports = Atendimentos;
