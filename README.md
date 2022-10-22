@@ -45,6 +45,7 @@ E pra finalizar, o comando "npm run start" para rodar o servidor!
 ###  <a href="https://github.com/Nayadsousa" target="_blank" rel="noopener noreferrer"> Nayara Duarte de Sousa </a>
 ###  <a href="https://github.com/Erikwpp" target="_blank" rel="noopener noreferrer">Erik Wilson Pires Pereira </a>
 ###  <a href="https://github.com/Williamnunes49" target="_blank" rel="noopener noreferrer">William de Carvalho Nunes</a>
+###  <a href="https://github.com/Edsonfavjr" target="_blank" rel="noopener noreferrer">Edson Fernando</a>
 
 
 ## 📄 Projeto Finalizado!  ❤️
