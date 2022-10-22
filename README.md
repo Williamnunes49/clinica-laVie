@@ -22,7 +22,7 @@ Após feito isso, vá em src/database/clinica_laVie.sql e copie o scrip, para ge
 
 Em seguida, basta digitar no terminal o comando "npm install" para baixar todas as dependêcias do package.json.
 
-E pra finalizar o comando "npm run start" para rodar o servidor!
+E pra finalizar, o comando "npm run start" para rodar o servidor!
 
 
 
