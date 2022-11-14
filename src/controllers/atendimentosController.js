@@ -54,14 +54,12 @@ const atendimentosController = {
         try {
             const { data_atendimento, observacoes, pacientes_id, } = req.body;
 
-
             const token = req.headers["authorization"];
             const idToken = jwtDecode(token).id
             if (!idToken) {
                 return res.status(400).json("id não encontrado ou Psicólogo não logado!")
             }
-
-
+    
             const newAtendimento = await Atendimentos.create({
                 data_atendimento,
                 observacoes,
