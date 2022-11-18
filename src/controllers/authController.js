@@ -15,11 +15,11 @@ const authController = {
             });
 
             if (!psicologo) {
-                return res.status(400).json('Email não cadastrado')
+                return res.status(400).json('Senha ou email inválido!')
             }
 
             if (!bcrypt.compareSync(senha, psicologo.senha)) {
-                return res.status(401).json('Senha inválida');
+                return res.status(401).json('Senha ou email inválido!');
 
             }
 

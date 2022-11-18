@@ -7,6 +7,7 @@ const router = require('../src/routes/auth.rout');
 
 db.hasConection();
 app.use(express.json());
+app.use(express.urlencoded());
 
 app.use(routes);
 app.use(router);

@@ -13,7 +13,8 @@ const psicologoValidation = require('../validations/usuarios/psicologosCreate');
 const idValidation = require('../validations/usuarios/idValidation');
 const pacienteValidation =  require('../validations/usuarios/pacientesCreate');
 const atendimentoValidation = require('../validations/usuarios/atendimentoCreate')
-const auth = require('../middlewares/auth')
+const auth = require('../middlewares/auth');
+const upload = require('../middlewares/upload');
 
 
 
@@ -25,8 +26,8 @@ const auth = require('../middlewares/auth')
 routes.get('/psicologos', psicologosController.listarPsicologos);
 routes.get('/psicologos/:id', idValidation, psicologosController.listarPsicologosId);
 routes.post('/psicologos', psicologoValidation, psicologosController.cadastraPsicologos);
-routes.put('/psicologos/:id', psicologosController.atualizarPsicologos);
-routes.delete('/psicologos/:id', psicologosController.deletarPsicologos);
+routes.put('/psicologos/:id', idValidation, psicologosController.atualizarPsicologos);
+routes.delete('/psicologos/:id',idValidation, psicologosController.deletarPsicologos);
 
 // Aqui começa o CRUD dos pacientes
 routes.get('/pacientes', pacientesController.listarPacientes);
@@ -34,6 +35,7 @@ routes.get('/pacientes/:id', idValidation, pacientesController.listarPacientesId
 routes.post('/pacientes', pacienteValidation, pacientesController.cadastrarPacientes);
 routes.put('/pacientes/:id', idValidation, pacientesController.atualizarPacientes);
 routes.delete('/pacientes/:id', idValidation, pacientesController.deletarPacienets);
+routes.post('/pacientes/cadastrar-lote', upload.single('file'), pacientesController.cadastrarEmLote)
 
 // Aqui começa o CRUD dos atendimentos
 routes.get('/atendimentos', atendimentosController.listarAtendimentos);

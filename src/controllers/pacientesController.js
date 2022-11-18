@@ -1,4 +1,6 @@
 const { Pacientes, Psicologos } = require("../models");
+const parseFiles = require("../modules/ParseFiles/index");
+const path = require("path");
 
 const pacientesController = {
     // lista todos os Pacientes
@@ -17,11 +19,25 @@ const pacientesController = {
         try {
             const { id } = req.params;
             const newPacientes = await Pacientes.findByPk(id);
-            
+
             if (!newPacientes) {
                 return res.status(404).json("Id não encontrado");
             }
             return res.status(200).json(newPacientes);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    // cadastra pacientes recebendo upload de arquivos
+    async cadastrarEmLote(req, res, next) {
+        try {
+            const { file } = req;
+
+            if (!file?.destination) return;
+
+            await parseFiles(path.resolve("uploads", file.filename));
+            return res.sendStatus(201);
         } catch (error) {
             next(error);
         }
@@ -69,7 +85,6 @@ const pacientesController = {
                 },
             });
             return res.status(200).json(pacienteAtualizado);
-        
         } catch (error) {
             next(error);
         }
@@ -85,7 +100,6 @@ const pacientesController = {
                 },
             });
             res.sendStatus(204);
-        
         } catch (error) {
             next(error);
         }

@@ -1,3 +1,5 @@
+const authSecret = require("../configs/authSecret")
+
 module.exports = {
-    key: "lavie",
+    key: authSecret.key,
 }

@@ -1,28 +1,28 @@
 const Sequelize = require("sequelize");
+const logger = require("./infra/logger");
+const authDB = require('./infra/config/authDB')
 
-const DB_NAME = "clinica_laVie";
-const DB_USER = "root";
-const DB_PASS = "";
 const DB_CONIG = {
   dialect: "mysql",
-  host: "localhost",
-  port: 3306,
+  host: authDB.host,
+  port: authDB.port,
 };
 
 let db = {};
-
+console.log(process.env.DB_NAME)
 try {
-  db = new Sequelize(DB_NAME, DB_USER, DB_PASS, DB_CONIG);
+  db = new Sequelize(authDB.name, authDB.user, authDB.pass, DB_CONIG);
 } catch (error) {
-  console.error("Error de conexão com o banco!");
+  logger.error("Error de conexão com o banco!", error)
 }
 
 async function hasConection() {
   try {
     await db.authenticate();
-    console.log("Banco de dados conectado com sucesso!");
+    logger.info("Banco de dados conectado com sucesso!")
+
   } catch (error) {
-    console.error("Erro na conexão ao banco de  dados!");
+    logger.error("Erro na conexão ao banco de  dados!", error)
   }
 }
 Object.assign(db, {

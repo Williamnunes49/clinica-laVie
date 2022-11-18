@@ -9,9 +9,11 @@ const psicologosController = {
         try {
             const { senha } = req.body
 
-            const newPiscologos = await Psicologos.findAll();
+            const newPiscologos = await Psicologos.findAll({
+                attributes: ['id', 'nome', 'email', 'apresentacao']
+            });
+            
             res.status(200).json(newPiscologos);
-
         }
         catch (error) {
             next(error);
@@ -61,9 +63,7 @@ const psicologosController = {
             const { nome, email, senha, apresentacao } = req.body;
             const newSenha = bcrypt.hashSync(senha, 10)
 
-
-
-            const psicologoAtualizado = await Psicologos.update({
+            await Psicologos.update({
                 nome,
                 email,
                 senha: newSenha,

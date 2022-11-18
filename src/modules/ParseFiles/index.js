@@ -30,6 +30,6 @@ async function salvarDados(dados) {
     }
 
 }
-parseFiles(path.resolve("pacientes.xlsx"));
+//parseFiles(path.resolve("pacientes.xlsx"));
 
 module.exports = parseFiles
