@@ -6,8 +6,6 @@ const pacientesController = require('../controllers/pacientesController');
 const psicologosController = require('../controllers/psicologosController');
 const atendimentosController = require('../controllers/atendimentosController');
 
-
-
 // importando dados de autenticaçõo
 const psicologoValidation = require('../validations/usuarios/psicologosCreate');
 const idValidation = require('../validations/usuarios/idValidation');
@@ -15,12 +13,6 @@ const pacienteValidation =  require('../validations/usuarios/pacientesCreate');
 const atendimentoValidation = require('../validations/usuarios/atendimentoCreate')
 const auth = require('../middlewares/auth');
 const upload = require('../middlewares/upload');
-
-
-
-
-
-
 
 // Aqui começa o CRUD dos Psicologos
 routes.get('/psicologos', psicologosController.listarPsicologos);

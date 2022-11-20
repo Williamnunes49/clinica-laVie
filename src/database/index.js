@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const logger = require("./infra/logger");
-const authDB = require('./infra/config/authDB')
+const authDB = require('./infra/config/authDB');
+const MESSAGE = require("../constants/messages");
 
 const DB_CONIG = {
   dialect: "mysql",
@@ -9,20 +10,20 @@ const DB_CONIG = {
 };
 
 let db = {};
-console.log(process.env.DB_NAME)
+
 try {
   db = new Sequelize(authDB.name, authDB.user, authDB.pass, DB_CONIG);
 } catch (error) {
-  logger.error("Error de conexão com o banco!", error)
+  logger.error(`${MESSAGE.DATABASE.INSTANCIA_ERROR}`, error)
 }
 
 async function hasConection() {
   try {
     await db.authenticate();
-    logger.info("Banco de dados conectado com sucesso!")
+    logger.info(MESSAGE.DATABASE.SUCESSO)
 
   } catch (error) {
-    logger.error("Erro na conexão ao banco de  dados!", error)
+    logger.error(`${MESSAGE.DATABASE.CONEXAO_ERROR}`, error)
   }
 }
 Object.assign(db, {

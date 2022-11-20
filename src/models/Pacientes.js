@@ -16,12 +16,18 @@ const Pacientes = db.define('Pacientes', {
     data_nascimento: {
         type: DataTypes.DATE
     },
+    createdAt: {
+        type: DataTypes.DATE
+    },
+    updatedAt: {
+        type: DataTypes.DATE
+    }
 
 
 },
     {
         tableName: "pacientes",
-        timestamps: false,
+        
     }
 
 );

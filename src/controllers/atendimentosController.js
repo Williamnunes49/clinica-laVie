@@ -1,5 +1,6 @@
 const { Atendimentos, Psicologos, Pacientes } = require('../models');
 const jwtDecode = require("jwt-decode");
+const MESSAGE = require('../constants/messages')
 
 
 const atendimentosController = {
@@ -40,7 +41,7 @@ const atendimentosController = {
                 ]
             });
             if (!newAtendimento) {
-                return res.status(404).json('Atendimento não encontrado');
+                return res.status(404).json(MESSAGE.ERROR.ATENDIMENTO_ERROR);
             }
             return res.status(200).json(newAtendimento);
         }
@@ -57,7 +58,7 @@ const atendimentosController = {
             const token = req.headers["authorization"];
             const idToken = jwtDecode(token).id
             if (!idToken) {
-                return res.status(400).json("id não encontrado ou Psicólogo não logado!")
+                return res.status(400).json(MESSAGE.ERROR.ID_LOGADO)
             }
     
             const newAtendimento = await Atendimentos.create({

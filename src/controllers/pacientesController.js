@@ -1,13 +1,14 @@
 const { Pacientes, Psicologos } = require("../models");
 const parseFiles = require("../modules/ParseFiles/index");
 const path = require("path");
+const {formatDateBr} = require("../helpers/formatDateBr");
+const MESSAGE = require("../constants/messages");
 
 const pacientesController = {
     // lista todos os Pacientes
     async listarPacientes(req, res, next) {
         try {
             const newPacientes = await Pacientes.findAll();
-
             return res.status(200).json(newPacientes);
         } catch (error) {
             next(error);
@@ -18,12 +19,15 @@ const pacientesController = {
     async listarPacientesId(req, res, next) {
         try {
             const { id } = req.params;
-            const newPacientes = await Pacientes.findByPk(id);
+            const newPacientes = await Pacientes.findByPk(id)
 
-            if (!newPacientes) {
-                return res.status(404).json("Id não encontrado");
+            if(!newPacientes) {
+                return res.status(404).json(MESSAGE.ERROR.ID_ERROR)
             }
-            return res.status(200).json(newPacientes);
+
+            const dataCadastro = formatDateBr(new Date(newPacientes.createdAt))
+           
+            return res.status(200).json({newPacientes, dataCadastro});
         } catch (error) {
             next(error);
         }
@@ -52,6 +56,7 @@ const pacientesController = {
                 nome,
                 email,
                 data_nascimento,
+                
             });
             return res.status(201).json(newPacientes);
         } catch (error) {
@@ -63,11 +68,9 @@ const pacientesController = {
     async atualizarPacientes(req, res, next) {
         try {
             const { id } = req.params;
-            const { nome, email, data_nascimento } = req.body;
+            const { nome, email, data_nascimento } = req.body
 
-            if (!id) return res.status(400).json("id não existe!");
-
-            const newPacientes = await Pacientes.update(
+            await Pacientes.update(
                 {
                     nome,
                     email,
@@ -79,12 +82,12 @@ const pacientesController = {
                     },
                 }
             );
-            const pacienteAtualizado = await Pacientes.findOne({
-                where: {
-                    id,
-                },
-            });
-            return res.status(200).json(pacienteAtualizado);
+            const pacientesAtualizados =  await Pacientes.findByPk(id);
+            
+            if(!pacientesAtualizados)  return res.status(404).json(MESSAGE.ERROR.ID_ERROR)
+            
+            return res.status(200).json(pacientesAtualizados);
+        
         } catch (error) {
             next(error);
         }

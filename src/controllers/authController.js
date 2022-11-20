@@ -2,6 +2,7 @@ const Psicologos = require('../models/Psicologos')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secret = require('../configs/secret');
+const MESSAGE = require('../constants/messages')
 
 const authController = {
     async login(req, res, next) {
@@ -15,11 +16,11 @@ const authController = {
             });
 
             if (!psicologo) {
-                return res.status(400).json('Senha ou email inválido!')
+                return res.status(400).json(MESSAGE.ERROR.DADOS_INVALIDOS)
             }
 
             if (!bcrypt.compareSync(senha, psicologo.senha)) {
-                return res.status(401).json('Senha ou email inválido!');
+                return res.status(401).json(MESSAGE.ERROR.DADOS_INVALIDOS);
 
             }
 

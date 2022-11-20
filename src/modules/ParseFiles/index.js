@@ -23,13 +23,11 @@ async function parseFiles(file) {
 // Insere varios Pacientes de uma vez só ao banco de dados - utilizando dados vindo de uma planilha!
 async function salvarDados(dados) {
     try {
-        const paciente = await Pacientes.Pacientes.bulkCreate(dados)
-    
+         await Pacientes.Pacientes.bulkCreate(dados)
+
     } catch (error) {
         console.error(error);
     }
 
 }
-//parseFiles(path.resolve("pacientes.xlsx"));
-
 module.exports = parseFiles
